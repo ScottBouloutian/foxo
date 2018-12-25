@@ -8,8 +8,15 @@ class Message extends StatefulWidget {
 }
 
 class MessageState extends State<Message> {
-    const messages = [
+    final messages = [
         'No, you cannot.',
+        'Foxo wins again!',
+        'Too crafty for you.',
+        'Foxtastic!',
+        'What does the foxo say?',
+        'Better luck next time.',
+        'Foxo remains undefeated.',
+        'Foxo always wins!',
     ];
     String message;
 

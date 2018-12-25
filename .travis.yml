@@ -1,0 +1,3 @@
+language: dart
+lint:
+    - dartanalyzer: --fatal-warnings lib
