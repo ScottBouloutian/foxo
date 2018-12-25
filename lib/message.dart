@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Message extends StatefulWidget {
     Message({Key key}) : super(key: key);
@@ -21,7 +22,9 @@ class MessageState extends State<Message> {
     String message;
 
     MessageState() {
-        message = messages[0];
+        final random = new Random();
+        final index = random.nextInt(this.messages.length);
+        message = messages[index];
     }
 
     @override
