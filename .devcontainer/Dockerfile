@@ -7,3 +7,4 @@ RUN sudo apt-get update \
     && flutter upgrade
 
 WORKDIR /workspace
+RUN flutter packages get
