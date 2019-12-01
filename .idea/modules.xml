@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/foxo.iml" filepath="$PROJECT_DIR$/foxo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/foxo_android.iml" filepath="$PROJECT_DIR$/foxo_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/foxo_android.iml" filepath="$PROJECT_DIR$/android/foxo_android.iml" />
     </modules>
   </component>
 </project>
