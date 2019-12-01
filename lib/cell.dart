@@ -13,7 +13,7 @@ class Cell extends StatelessWidget {
                         offset: new Offset(5.0, 5.0),
                         blurRadius: 5.0,
                     )
-                ]
+                ],
                 color: Colors.grey[300],
             ),
             height: 90.0,
