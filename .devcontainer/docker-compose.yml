@@ -7,3 +7,5 @@ services:
     volumes:
       - ..:/workspace
       - ~/.ssh:/home/cirrus/.ssh
+      - /dev/bus/usb:/dev/bus/usb
+    privileged: true
