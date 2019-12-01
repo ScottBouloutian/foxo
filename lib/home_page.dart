@@ -8,25 +8,34 @@ class HomePage extends StatefulWidget {
     final String title;
 
     @override
-    _HomePageState createState() => new _HomePageState();
+    _HomePageState createState() => _HomePageState();
 }
 
 // Home Screen State
 class _HomePageState extends State<HomePage> {
     @override
     Widget build(BuildContext context) {
-        return new Scaffold(
-            appBar: new AppBar(
-                title: new Text(widget.title),
+        return Scaffold(
+            appBar: AppBar(
+                title: Text(widget.title),
             ),
-            body: new Center(
-                child: new Column(
-                    children: [
-                        new Message(),
-                        new Cell(),
-                    ]
-                ),
-            ),
+            body: Column(
+                children: [
+                    Message(),
+                    Expanded(
+                      child: GridView.count(
+                          crossAxisCount: 3,
+                          children: List.generate(9, (index) {
+                              return Container(
+                                  child: Cell(),
+                                  padding: const EdgeInsets.all(10),
+                              );
+                          }),
+                          padding: const EdgeInsets.all(20),
+                      )
+                    )
+                ],
+            )
         );
     }
 }
