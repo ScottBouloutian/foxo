@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class Cell extends StatelessWidget {
     @override Widget build(BuildContext context) {
-        return new Container(
-            decoration: new BoxDecoration(
-                borderRadius: new BorderRadius.all(
+        return Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
                     Radius.circular(10.0),
                 ),
                 boxShadow: [
-                    new BoxShadow(
+                    BoxShadow(
                         color: Colors.grey[400],
-                        offset: new Offset(5.0, 5.0),
+                        offset: Offset(5.0, 5.0),
                         blurRadius: 5.0,
                     )
                 ],
