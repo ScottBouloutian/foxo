@@ -4,25 +4,25 @@ import 'home_page.dart';
 class App extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
-        return new MaterialApp(
+        return MaterialApp(
             title: 'Foxo',
-            theme: new ThemeData(
+            theme: ThemeData(
                 primarySwatch: Colors.orange,
-                primaryTextTheme: new TextTheme(
-                    title: new TextStyle(
+                primaryTextTheme: TextTheme(
+                    title: TextStyle(
                         color: Colors.white,
                     ),
                 ),
-                textTheme: new TextTheme(
-                    title: new TextStyle(
+                textTheme: TextTheme(
+                    title: TextStyle(
                         color: Colors.black,
                     ),
-                    subhead: new TextStyle(
+                    subhead: TextStyle(
                         color: Colors.green,
                     ),
                 ),
             ),
-            home: new HomePage(title: 'Foxo'),
+            home: HomePage(title: 'Foxo'),
         );
     }
 }
