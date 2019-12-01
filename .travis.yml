@@ -7,3 +7,4 @@ install:
     - flutter packages get
 script:
     - flutter analyze
+    - flutter test
