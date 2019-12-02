@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'message.dart';
 import 'cell.dart';
+import 'score.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -11,7 +12,6 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-// Home Screen State
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,26 @@ class _HomePageState extends State<HomePage> {
               }),
               padding: const EdgeInsets.all(20),
             )
-          )
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Score(
+                  title: 'Ties',
+                  value: 0,
+                ),
+              ),
+              Expanded(
+                child: Image.asset('images/fox.png'),
+              ),
+              Expanded(
+                child: Score(
+                  title: 'Wins',
+                  value: 0,
+                ),
+              ),
+            ],
+          ),
         ],
       )
     );
