@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Container(
-                  child: Image.asset('images/fox.png'),
+                  child: Image.asset('images/foxo.png'),
                   width: 64,
                 ),
                 Expanded(
