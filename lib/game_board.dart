@@ -1,29 +1,13 @@
 import 'package:flutter/material.dart';
 import 'cell.dart';
-
-enum BoardState {
-  empty,
-  foxo,
-  player,
-}
+import 'enums.dart';
 
 class GameBoard extends StatefulWidget {
   GameBoard({
     Key key,
-    this.board = const [
-      BoardState.empty,
-      BoardState.empty,
-      BoardState.empty,
-      BoardState.empty,
-      BoardState.empty,
-      BoardState.empty,
-      BoardState.empty,
-      BoardState.empty,
-      BoardState.empty,
-    ],
   }) : super(key: key);
 
-  final List<BoardState> board;
+  final List<CellType> board = List.generate(9, (index) => CellType.empty);
 
   @override
   _GameBoardState createState() => _GameBoardState();
@@ -36,17 +20,17 @@ class _GameBoardState extends State<GameBoard> {
       child: Padding(
         child: GridView.count(
           crossAxisCount: 3,
-          children: List.generate(9, (index) {
-            return Container(
+          children: widget.board.asMap().map((index, cellType) {
+            return MapEntry(index, Container(
               child: GestureDetector(
                 onTap: () {
-                  print('onTap called. $index');
+                  this.setState(() => widget.board[index] = CellType.foxo);
                 },
-                child: Cell(),
+                child: Cell(type: cellType),
               ),
               padding: const EdgeInsets.all(10),
-            );
-          }),
+            ));
+          }).values.toList(),
         ),
         padding: EdgeInsets.symmetric(vertical: 20),
       ),
