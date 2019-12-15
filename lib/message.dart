@@ -8,7 +8,8 @@ class Message extends StatefulWidget {
   MessageState createState() => MessageState();
 }
 
-class MessageState extends State<Message> {
+class MessageState extends State<Message> with TickerProviderStateMixin {
+  String message;
   final messages = [
     'No, you cannot.',
     'Foxo wins again!',
@@ -20,15 +21,27 @@ class MessageState extends State<Message> {
     'Foxo always wins!',
     'Minecraft has foxes too!',
   ];
-  String message;
+  Animation animation;
 
   MessageState() {
     final random = Random();
-    final index = random.nextInt(this.messages.length);
+    final index = random.nextInt(messages.length);
     message = messages[index];
   }
 
-  @override
+  initState() {
+    super.initState();
+    final controller = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
+    animation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeIn,
+    );
+    controller.forward();
+  }
+
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -40,9 +53,12 @@ class MessageState extends State<Message> {
           ),
           padding: const EdgeInsets.symmetric(vertical: 10),
         ),
-        Text(
-          message,
-          style: Theme.of(context).textTheme.subhead,
+        FadeTransition(
+          child: Text(
+            message,
+            style: Theme.of(context).textTheme.subhead,
+          ),
+          opacity: animation,
         ),
       ],
     );
