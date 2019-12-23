@@ -21,6 +21,7 @@ class MessageState extends State<Message> with TickerProviderStateMixin {
     'Foxo always wins!',
     'Minecraft has foxes too!',
   ];
+  AnimationController controller;
   Animation animation;
 
   MessageState() {
@@ -29,9 +30,10 @@ class MessageState extends State<Message> with TickerProviderStateMixin {
     message = messages[index];
   }
 
-  initState() {
+  @override
+  void initState() {
     super.initState();
-    final controller = AnimationController(
+    controller = AnimationController(
       duration: Duration(seconds: 2),
       vsync: this,
     );
@@ -42,6 +44,13 @@ class MessageState extends State<Message> with TickerProviderStateMixin {
     controller.forward();
   }
 
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
