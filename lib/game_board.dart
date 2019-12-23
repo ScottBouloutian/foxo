@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
 import 'cell.dart';
 import 'enums.dart';
+import 'dart:math';
 
 class GameBoard extends StatefulWidget {
   GameBoard({
     Key key,
   }) : super(key: key);
 
-  final List<CellType> board = List.generate(9, (index) => CellType.empty);
-
   @override
   _GameBoardState createState() => _GameBoardState();
 }
 
 class _GameBoardState extends State<GameBoard> {
+  List<CellType> board = List.generate(9, (index) => CellType.empty);
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         child: GridView.count(
           crossAxisCount: 3,
-          children: widget.board.asMap().map((index, cellType) {
+          children: board.asMap().map((index, cellType) {
             return MapEntry(index, Container(
               child: GestureDetector(
                 onTap: () {
-                  this.setState(() => widget.board[index] = CellType.foxo);
+                  final Random random = Random();
+                  final CellType type = [CellType.foxo, CellType.chick][random.nextInt(2)];
+                  this.setState(() {
+                    board[index] = type;
+                  });
                 },
                 child: Cell(type: cellType),
               ),
