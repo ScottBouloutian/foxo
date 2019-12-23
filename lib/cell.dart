@@ -24,7 +24,10 @@ class CellState extends State<Cell> with SingleTickerProviderStateMixin {
       case CellType.empty:
         return null;
       case CellType.foxo:
-        return Image.asset('images/foxo.png');
+        return Container(
+          child: Image.asset('images/foxo.png'),
+          transform: Matrix4.translationValues(8, 0, 0),
+        );
       case CellType.chick:
         return Image.asset('images/chick.png');
       default:
@@ -54,11 +57,17 @@ class CellState extends State<Cell> with SingleTickerProviderStateMixin {
   }
 
   @override
-  didUpdateWidget(oldWidget) {
+  void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.type == CellType.empty && widget.type != CellType.empty) {
       controller.forward();
     }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
