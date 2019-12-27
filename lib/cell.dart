@@ -84,18 +84,11 @@ class CellState extends State<Cell> with SingleTickerProviderStateMixin {
         borderRadius: BorderRadius.all(
           Radius.circular(10),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey[400],
-            offset: Offset(5, 5),
-            blurRadius: 5,
-          )
-        ],
-        color: Colors.grey[300],
+        color: Colors.grey[200],
       ),
-      padding: const EdgeInsets.all(8.0),
-      height: 90.0,
-      width: 90.0,
+      padding: const EdgeInsets.all(12),
+      height: 90,
+      width: 90,
     );
   }
 }
