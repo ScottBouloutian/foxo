@@ -1,48 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:foxo/spiral_transition.dart';
+import 'package:foxo/wiggle_transition.dart';
 import 'enums.dart';
 
 class Cell extends StatefulWidget {
   final CellType type;
+  final bool wiggle;
 
   Cell({
     Key key,
     this.type,
+    this.wiggle,
   }) : super(key: key);
 
   @override
   CellState createState() => CellState();
 }
 
-class CellState extends State<Cell> with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
-  Tween<double> turnsTween;
-  Tween<double> scaleTween;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    );
-    animation  = CurvedAnimation(
-      parent: controller,
-      curve: Curves.easeOutBack,
-    );
-    turnsTween = Tween<double>(
-      begin: 0,
-      end: 1,
-    );
-    scaleTween = Tween<double>(
-      begin: 0.5,
-      end: 1,
-    );
-    if (widget.type != CellType.empty) {
-      controller.forward();
-    }
-  }
-
+class CellState extends State<Cell> {
   Widget buildImage() {
     switch (widget.type) {
       case CellType.empty:
@@ -60,31 +35,13 @@ class CellState extends State<Cell> with SingleTickerProviderStateMixin {
   }
 
   @override
-  void didUpdateWidget(oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.type == CellType.empty && widget.type != CellType.empty) {
-      controller.forward();
-    } else if (oldWidget.type != CellType.empty && widget.type == CellType.empty) {
-      controller.reset();
-    }
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final image = buildImage();
+    final transition = widget.wiggle
+      ? WiggleTransition(child: image)
+      : SpiralTransition(child: image);
     return Container(
-      child: RotationTransition(
-        child: ScaleTransition(
-          child: this.buildImage(),
-          scale: scaleTween.animate(animation),
-        ),
-        turns: turnsTween.animate(animation),
-      ),
+      child: transition,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(10),
