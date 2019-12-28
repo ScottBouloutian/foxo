@@ -5,8 +5,11 @@ import 'game.dart';
 import 'dart:math';
 
 class GameBoard extends StatefulWidget {
+  final Game game;
+
   GameBoard({
     Key key,
+    this.game,
   }) : super(key: key);
 
   @override
@@ -14,44 +17,38 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardState extends State<GameBoard> {
-  Game game;
-
   @override
   void initState() {
     super.initState();
-    game = Game();
     final moves = [0, 2, 6, 8];
     final random = Random();
     final index = random.nextInt(moves.length);
-    game.state[moves[index]] = CellType.foxo;
+    widget.game.state[moves[index]] = CellType.foxo;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        child: GridView.count(
-          crossAxisCount: 3,
-          children: game.state.asMap().map((index, cellType) {
-            return MapEntry(index, Container(
-              child: GestureDetector(
-                onTap: () {
-                  if (cellType == CellType.empty) {
-                    this.setState(() {
-                      game.state[index] = CellType.chick;
-                      final bestMove = game.minimax(0, CellType.foxo);
-                      game.state[bestMove] = CellType.foxo;
-                    });
-                  }
-                },
-                child: Cell(type: cellType),
-              ),
-              padding: const EdgeInsets.all(10),
-            ));
-          }).values.toList(),
-        ),
-        padding: EdgeInsets.symmetric(vertical: 20),
-      ),
+    return GridView.count(
+      crossAxisCount: 3,
+      children: widget.game.state.asMap().map((index, cellType) {
+        return MapEntry(index, Container(
+          child: GestureDetector(
+            onTap: () {
+              final winner = widget.game.findGameState();
+              if (cellType == CellType.empty && winner == null) {
+                this.setState(() {
+                  widget.game.state[index] = CellType.chick;
+                  final bestMove = widget.game.minimax(0, CellType.foxo);
+                  widget.game.state[bestMove] = CellType.foxo;
+                });
+              }
+            },
+            child: Cell(type: cellType),
+          ),
+          padding: const EdgeInsets.all(10),
+        ));
+      }).values.toList(),
+      shrinkWrap: true,
     );
   }
 }
