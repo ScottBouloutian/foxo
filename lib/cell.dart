@@ -19,22 +19,6 @@ class CellState extends State<Cell> with SingleTickerProviderStateMixin {
   Tween<double> turnsTween;
   Tween<double> scaleTween;
 
-  Widget buildImage() {
-    switch (widget.type) {
-      case CellType.empty:
-        return null;
-      case CellType.foxo:
-        return Container(
-          child: Image.asset('images/foxo.png'),
-          transform: Matrix4.translationValues(8, 0, 0),
-        );
-      case CellType.chick:
-        return Image.asset('images/chick.png');
-      default:
-        return null;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -54,6 +38,25 @@ class CellState extends State<Cell> with SingleTickerProviderStateMixin {
       begin: 0.5,
       end: 1,
     );
+    if (widget.type != CellType.empty) {
+      controller.forward();
+    }
+  }
+
+  Widget buildImage() {
+    switch (widget.type) {
+      case CellType.empty:
+        return null;
+      case CellType.foxo:
+        return Container(
+          child: Image.asset('images/foxo.png'),
+          transform: Matrix4.translationValues(8, 0, 0),
+        );
+      case CellType.chick:
+        return Image.asset('images/chick.png');
+      default:
+        return null;
+    }
   }
 
   @override
