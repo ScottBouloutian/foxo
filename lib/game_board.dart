@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'cell.dart';
 import 'enums.dart';
+import 'game.dart';
 import 'dart:math';
 
 class GameBoard extends StatefulWidget {
@@ -13,7 +14,17 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardState extends State<GameBoard> {
-  List<CellType> board = List.generate(9, (index) => CellType.empty);
+  Game game;
+
+  @override
+  void initState() {
+    super.initState();
+    game = Game();
+    final moves = [0, 2, 6, 8];
+    final random = Random();
+    final index = random.nextInt(moves.length);
+    game.state[moves[index]] = CellType.foxo;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +32,17 @@ class _GameBoardState extends State<GameBoard> {
       child: Padding(
         child: GridView.count(
           crossAxisCount: 3,
-          children: board.asMap().map((index, cellType) {
+          children: game.state.asMap().map((index, cellType) {
             return MapEntry(index, Container(
               child: GestureDetector(
                 onTap: () {
-                  final Random random = Random();
-                  final CellType type = [CellType.foxo, CellType.chick][random.nextInt(2)];
-                  this.setState(() {
-                    board[index] = type;
-                  });
+                  if (cellType == CellType.empty) {
+                    this.setState(() {
+                      game.state[index] = CellType.chick;
+                      final bestMove = game.minimax(0, CellType.foxo);
+                      game.state[bestMove] = CellType.foxo;
+                    });
+                  }
                 },
                 child: Cell(type: cellType),
               ),
