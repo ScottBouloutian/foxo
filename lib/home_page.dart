@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'message.dart';
 import 'score.dart';
 import 'game_board.dart';
+import 'game.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -13,6 +14,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Game game;
+
+  @override
+  void initState() {
+    super.initState();
+    game = Game();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,28 +32,36 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Message(),
-            GameBoard(),
+            GameBoard(
+              game: game,
+            ),
+            RaisedButton(
+              child: const Text('Go Again'),
+              onPressed: () {
+                setState(() {
+                  game = Game();
+                });
+              },
+            ),
             Row(
               children: [
-                Expanded(
-                  child: Score(
-                    title: 'Ties',
-                    value: 0,
-                  ),
+                Score(
+                  title: 'Ties',
+                  value: 0,
                 ),
                 Container(
                   child: Image.asset('images/foxo.png'),
                   width: 64,
                 ),
-                Expanded(
-                  child: Score(
-                    title: 'Wins',
-                    value: 0,
-                  ),
+                Score(
+                  title: 'Wins',
+                  value: 0,
                 ),
               ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             ),
           ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
         ),
         padding: const EdgeInsets.all(20),
       ),
