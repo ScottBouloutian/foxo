@@ -49,15 +49,17 @@ void main() {
 
   test('finding the game state when it is a tie', () {
     final game = Game();
-    game.state[0] = CellType.foxo;
-    game.state[1] = CellType.foxo;
-    game.state[2] = CellType.chick;
-    game.state[3] = CellType.chick;
-    game.state[4] = CellType.chick;
-    game.state[5] = CellType.foxo;
-    game.state[6] = CellType.foxo;
-    game.state[7] = CellType.foxo;
-    game.state[8] = CellType.chick;
+    game.state = [
+      CellType.foxo,
+      CellType.foxo,
+      CellType.chick,
+      CellType.chick,
+      CellType.chick,
+      CellType.foxo,
+      CellType.foxo,
+      CellType.foxo,
+      CellType.chick,
+    ];
     expect(game.findGameState(), CellType.empty);
   });
 
