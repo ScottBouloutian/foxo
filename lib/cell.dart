@@ -64,6 +64,8 @@ class CellState extends State<Cell> with SingleTickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.type == CellType.empty && widget.type != CellType.empty) {
       controller.forward();
+    } else if (oldWidget.type != CellType.empty && widget.type == CellType.empty) {
+      controller.reset();
     }
   }
 

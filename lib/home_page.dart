@@ -3,6 +3,7 @@ import 'message.dart';
 import 'score.dart';
 import 'game_board.dart';
 import 'game.dart';
+import 'enums.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -15,11 +16,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Game game;
+  int ties;
+  int wins;
 
   @override
   void initState() {
     super.initState();
     game = Game();
+    ties = 0;
+    wins = 0;
   }
 
   @override
@@ -34,6 +39,21 @@ class _HomePageState extends State<HomePage> {
             Message(),
             GameBoard(
               game: game,
+              onWinner: (winner) {
+                switch (winner) {
+                  case CellType.empty:
+                    setState(() {
+                      ties++;
+                    });
+                    break;
+                  case CellType.foxo:
+                    setState(() {
+                      wins++;
+                    });
+                    break;
+                  case CellType.chick:
+                }
+              }
             ),
             RaisedButton(
               child: const Text('Go Again'),
@@ -47,7 +67,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Score(
                   title: 'Ties',
-                  value: 0,
+                  value: ties,
                 ),
                 Container(
                   child: Image.asset('images/foxo.png'),
@@ -55,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Score(
                   title: 'Wins',
-                  value: 0,
+                  value: wins,
                 ),
               ],
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
