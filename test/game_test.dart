@@ -4,7 +4,7 @@ import 'package:foxo/enums.dart';
 
 void main() {
   test('initializes state', () {
-    final game = Game();
+    final game = Game(false);
     expect(game.state, [
       CellType.empty,
       CellType.empty,
@@ -19,7 +19,7 @@ void main() {
   });
 
   test('finding a winner', () {
-    final game = Game();
+    final game = Game(false);
     game.state[0] = CellType.foxo;
     game.state[1] = CellType.foxo;
     game.state[2] = CellType.foxo;
@@ -27,7 +27,7 @@ void main() {
   });
 
   test('finding the game state when foxo wins', () {
-    final game = Game();
+    final game = Game(false);
     game.state[0] = CellType.foxo;
     game.state[1] = CellType.foxo;
     game.state[2] = CellType.foxo;
@@ -35,7 +35,7 @@ void main() {
   });
 
   test('finding the game state when chick wins', () {
-    final game = Game();
+    final game = Game(false);
     game.state[0] = CellType.chick;
     game.state[1] = CellType.chick;
     game.state[2] = CellType.chick;
@@ -43,12 +43,12 @@ void main() {
   });
 
   test('finding the game state when the game is still in progress', () {
-    final game = Game();
+    final game = Game(false);
     expect(game.findGameState(), null);
   });
 
   test('finding the game state when it is a tie', () {
-    final game = Game();
+    final game = Game(false);
     game.state = [
       CellType.foxo,
       CellType.foxo,
@@ -64,7 +64,7 @@ void main() {
   });
 
   test('the minimax algorithm', () {
-    final game = Game();
+    final game = Game(false);
     game.state[0] = CellType.chick;
     expect(game.minimax(0, CellType.foxo), 4);
   });
