@@ -7,6 +7,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Foxo',
       theme: ThemeData(
+        primaryColor: Colors.orange,
         primarySwatch: Colors.orange,
         primaryTextTheme: TextTheme(
           title: TextStyle(
