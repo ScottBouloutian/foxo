@@ -29,6 +29,45 @@ class _HomePageState extends State<HomePage> {
     wins = 0;
   }
 
+  Widget buildResetButton() {
+    final winner = game.findGameState();
+    return AnimatedOpacity(
+      child: RaisedButton(
+        child: const Text('Try Again'),
+        color: Theme.of(context).primaryColor,
+        textColor: Theme.of(context).primaryTextTheme.title.color,
+        onPressed: () {
+          setState(() {
+            moveFoxo = !moveFoxo;
+            game = Game(moveFoxo);
+          });
+        },
+      ),
+      duration: const Duration(milliseconds: 500),
+      opacity: winner == null ? 0 : 1,
+    );
+  }
+
+  Widget buildFooter() {
+    return Row(
+      children: [
+        Score(
+          title: 'Ties',
+          value: ties,
+        ),
+        Container(
+          child: Image.asset('images/foxo.png'),
+          width: 64,
+        ),
+        Score(
+          title: 'Wins',
+          value: wins,
+        ),
+      ],
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,32 +96,8 @@ class _HomePageState extends State<HomePage> {
                 }
               }
             ),
-            RaisedButton(
-              child: const Text('Go Again'),
-              onPressed: () {
-                setState(() {
-                  moveFoxo = !moveFoxo;
-                  game = Game(moveFoxo);
-                });
-              },
-            ),
-            Row(
-              children: [
-                Score(
-                  title: 'Ties',
-                  value: ties,
-                ),
-                Container(
-                  child: Image.asset('images/foxo.png'),
-                  width: 64,
-                ),
-                Score(
-                  title: 'Wins',
-                  value: wins,
-                ),
-              ],
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            ),
+            buildResetButton(),
+            buildFooter(),
           ],
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
         ),
