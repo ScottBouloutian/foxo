@@ -4,8 +4,14 @@ import 'dart:math';
 class Game {
   List<CellType> state;
 
-  Game() {
+  Game(bool moveFoxo) {
     state = List.generate(9, (index) => CellType.empty);
+    if (moveFoxo) {
+      final moves = [0, 2, 6, 8];
+      final random = Random();
+      final index = random.nextInt(moves.length);
+      state[moves[index]] = CellType.foxo;
+    }
   }
 
   bool winner(List<int> line) {

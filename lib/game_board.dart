@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'cell.dart';
 import 'enums.dart';
 import 'game.dart';
-import 'dart:math';
 
 class GameBoard extends StatefulWidget {
   final Game game;
@@ -22,19 +21,12 @@ class _GameBoardState extends State<GameBoard> {
   List<int> winningLine;
 
   @override
-  void initState() {
-    super.initState();
-    final moves = [0, 2, 6, 8];
-    final random = Random();
-    final index = random.nextInt(moves.length);
-    widget.game.state[moves[index]] = CellType.foxo;
-  }
-
-  @override
   void didUpdateWidget(GameBoard oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.game != widget.game) {
-      winningLine = null;
+      setState(() {
+        winningLine = null;
+      });
     }
   }
 
@@ -43,6 +35,10 @@ class _GameBoardState extends State<GameBoard> {
     if (cellType == CellType.empty && winner == null) {
       this.setState(() {
         widget.game.state[index] = CellType.chick;
+        winner = widget.game.findGameState();
+        if (winner != null) {
+          return;
+        }
         final bestMove = widget.game.minimax(0, CellType.foxo);
         widget.game.state[bestMove] = CellType.foxo;
         winner = widget.game.findGameState();
