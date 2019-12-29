@@ -14,9 +14,8 @@ class SpiralTransition extends StatefulWidget {
 
 class SpiralTransitionState extends State<SpiralTransition> with SingleTickerProviderStateMixin {
   AnimationController controller;
-  Animation<double> animation;
-  Tween<double> turnsTween;
-  Tween<double> scaleTween;
+  Animation turnsAnimation;
+  Animation scaleAnimation;
 
   @override
   void initState() {
@@ -25,18 +24,27 @@ class SpiralTransitionState extends State<SpiralTransition> with SingleTickerPro
       duration: const Duration(seconds: 1),
       vsync: this,
     );
-    animation = CurvedAnimation(
-      parent: controller,
-      curve: Curves.linearToEaseOut,
-    );
-    turnsTween = Tween<double>(
+    turnsAnimation = Tween<double>(
       begin: 0,
       end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.linearToEaseOut,
+      )
     );
-    scaleTween = Tween<double>(
+    scaleAnimation = Tween<double>(
       begin: 0.5,
       end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.linearToEaseOut,
+      )
     );
+    if (widget.child != null) {
+      controller.forward();
+    }
   }
 
   @override
@@ -59,9 +67,9 @@ class SpiralTransitionState extends State<SpiralTransition> with SingleTickerPro
     return RotationTransition(
       child: ScaleTransition(
         child: widget.child,
-        scale: scaleTween.animate(animation),
+        scale: scaleAnimation,
       ),
-      turns: turnsTween.animate(animation),
+      turns: turnsAnimation,
     );
   }
 }

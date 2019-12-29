@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool moveFoxo;
   Game game;
   int ties;
   int wins;
@@ -22,7 +23,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    game = Game();
+    moveFoxo = true;
+    game = Game(moveFoxo);
     ties = 0;
     wins = 0;
   }
@@ -59,7 +61,8 @@ class _HomePageState extends State<HomePage> {
               child: const Text('Go Again'),
               onPressed: () {
                 setState(() {
-                  game = Game();
+                  moveFoxo = !moveFoxo;
+                  game = Game(moveFoxo);
                 });
               },
             ),
