@@ -4,6 +4,7 @@ import 'score.dart';
 import 'game_board.dart';
 import 'game.dart';
 import 'enums.dart';
+import 'slide_fade_transition.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -14,11 +15,12 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
   bool moveFoxo;
   Game game;
   int ties;
   int wins;
+  AnimationController controller;
 
   @override
   void initState() {
@@ -27,10 +29,25 @@ class _HomePageState extends State<HomePage> {
     game = Game(moveFoxo);
     ties = 0;
     wins = 0;
+    controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    controller.forward();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   Widget buildResetButton() {
     final winner = game.findGameState();
+    final duration = winner == null
+      ? Duration.zero
+      : const Duration(milliseconds: 500);
+    final opacity = winner == null ? 0.0 : 1.0;
     return AnimatedOpacity(
       child: RaisedButton(
         child: const Text('Try Again'),
@@ -43,8 +60,8 @@ class _HomePageState extends State<HomePage> {
           });
         },
       ),
-      duration: const Duration(milliseconds: 500),
-      opacity: winner == null ? 0 : 1,
+      duration: duration,
+      opacity: opacity,
     );
   }
 
@@ -77,27 +94,39 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         child: Column(
           children: [
-            Message(),
-            GameBoard(
-              game: game,
-              onWinner: (winner) {
-                switch (winner) {
-                  case CellType.empty:
-                    setState(() {
-                      ties++;
-                    });
-                    break;
-                  case CellType.foxo:
-                    setState(() {
-                      wins++;
-                    });
-                    break;
-                  case CellType.chick:
+            SlideFadeTransition(
+              child: Message(),
+              controller: controller,
+              delay: 0,
+            ),
+            SlideFadeTransition(
+              child: GameBoard(
+                game: game,
+                onWinner: (winner) {
+                  switch (winner) {
+                    case CellType.empty:
+                      setState(() {
+                        ties++;
+                      });
+                      break;
+                    case CellType.foxo:
+                      setState(() {
+                        wins++;
+                      });
+                      break;
+                    case CellType.chick:
+                  }
                 }
-              }
+              ),
+              controller: controller,
+              delay: 0.25,
             ),
             buildResetButton(),
-            buildFooter(),
+            SlideFadeTransition(
+              child: buildFooter(),
+              controller: controller,
+              delay: 0.5,
+            )
           ],
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
         ),

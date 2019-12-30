@@ -73,12 +73,10 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: GridView.count(
-        crossAxisCount: 3,
-        children: buildCells(),
-        shrinkWrap: true,
-      ),
+    return GridView.count(
+      crossAxisCount: 3,
+      children: buildCells(),
+      shrinkWrap: true,
     );
   }
 }
