@@ -37,6 +37,7 @@ class _GameBoardState extends State<GameBoard> {
         widget.game.state[index] = CellType.chick;
         winner = widget.game.findGameState();
         if (winner != null) {
+          widget.onWinner(winner);
           return;
         }
         final bestMove = widget.game.minimax(0, CellType.foxo);
@@ -72,10 +73,12 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 3,
-      children: buildCells(),
-      shrinkWrap: true,
+    return Flexible(
+      child: GridView.count(
+        crossAxisCount: 3,
+        children: buildCells(),
+        shrinkWrap: true,
+      ),
     );
   }
 }
