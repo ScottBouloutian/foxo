@@ -66,23 +66,46 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
   Widget buildFooter() {
-    return Row(
-      children: [
-        Score(
-          title: 'Ties',
-          value: ties,
-        ),
-        Container(
-          child: Image.asset('images/foxo.png'),
-          width: 64,
-        ),
-        Score(
-          title: 'Wins',
-          value: wins,
-        ),
-      ],
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return SlideFadeTransition(
+      child: Row(
+        children: [
+          Score(
+            title: 'Ties',
+            value: ties,
+          ),
+          Container(
+            child: Opacity(
+              child: Image.asset('images/foxo.png'),
+              opacity: 0.5,
+            ),
+            width: 64,
+          ),
+          Score(
+            title: 'Wins',
+            value: wins,
+          ),
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      ),
+      controller: controller,
+      delay: 0.5,
     );
+  }
+
+  void handleWinner(CellType winner) {
+    switch (winner) {
+      case CellType.empty:
+        setState(() {
+          ties++;
+        });
+        break;
+      case CellType.foxo:
+        setState(() {
+          wins++;
+        });
+        break;
+      case CellType.chick:
+    }
   }
 
   @override
@@ -99,34 +122,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               controller: controller,
               delay: 0,
             ),
-            SlideFadeTransition(
-              child: GameBoard(
-                game: game,
-                onWinner: (winner) {
-                  switch (winner) {
-                    case CellType.empty:
-                      setState(() {
-                        ties++;
-                      });
-                      break;
-                    case CellType.foxo:
-                      setState(() {
-                        wins++;
-                      });
-                      break;
-                    case CellType.chick:
-                  }
-                }
+            Flexible(
+              child: SlideFadeTransition(
+                child: GameBoard(
+                  game: game,
+                  onWinner: handleWinner,
+                ),
+                controller: controller,
+                delay: 0.25,
               ),
-              controller: controller,
-              delay: 0.25,
             ),
             buildResetButton(),
-            SlideFadeTransition(
-              child: buildFooter(),
-              controller: controller,
-              delay: 0.5,
-            )
+            buildFooter(),
           ],
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
         ),
