@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ),
           Container(
             child: Opacity(
-              child: Image.asset('images/foxo.png'),
+              child: Image.asset('assets/images/foxo.png'),
               opacity: 0.5,
             ),
             width: 64,
