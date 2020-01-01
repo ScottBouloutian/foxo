@@ -1,4 +1,4 @@
-package com.example.foxo
+package com.scottbouloutian.foxo
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
