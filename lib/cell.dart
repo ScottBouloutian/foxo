@@ -24,11 +24,11 @@ class CellState extends State<Cell> {
         return null;
       case CellType.foxo:
         return Container(
-          child: Image.asset('images/foxo.png'),
+          child: Image.asset('assets/images/foxo.png'),
           transform: Matrix4.translationValues(8, 0, 0),
         );
       case CellType.chick:
-        return Image.asset('images/chick.png');
+        return Image.asset('assets/images/chick.png');
       default:
         return null;
     }
