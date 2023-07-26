@@ -4,6 +4,6 @@ import 'package:foxo_application/app.dart';
 void main() {
   testWidgets('finds a title', (WidgetTester tester) async {
     await tester.pumpWidget(const App());
-    expect(find.text('Foxo'), findsOneWidget);
+    expect(find.text('Can you outsmart Foxo?'), findsOneWidget);
   });
 }
