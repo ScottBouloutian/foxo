@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 
 class App extends StatelessWidget {
+  const App({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -9,21 +11,18 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.orange,
         primarySwatch: Colors.orange,
-        primaryTextTheme: TextTheme(
-          title: TextStyle(
-              color: Colors.white,
+        primaryTextTheme: const TextTheme(
+          titleLarge: TextStyle(
+            color: Colors.white,
           ),
         ),
-        textTheme: TextTheme(
-          title: TextStyle(
-              color: Colors.black,
-          ),
-          subhead: TextStyle(
-              color: Colors.green,
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(
+            color: Colors.white,
           ),
         ),
       ),
-      home: HomePage(title: 'Foxo'),
+      home: const HomePage(title: 'Can you outsmart Foxo?'),
     );
   }
 }
