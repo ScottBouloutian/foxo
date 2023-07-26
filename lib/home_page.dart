@@ -71,13 +71,16 @@ class HomePageState extends State<HomePage>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          const Score(
+            title: 'Wins',
+            value: 0,
+          ),
           Score(
             title: 'Ties',
             value: ties,
           ),
-          const SizedBox(width: 64),
           Score(
-            title: 'Wins',
+            title: 'Loss',
             value: wins,
           ),
         ],

@@ -82,6 +82,7 @@ class _GameBoardState extends State<GameBoard> {
     return GridView.count(
       crossAxisCount: 3,
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       children: buildCells(),
     );
   }
