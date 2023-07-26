@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foxo/game.dart';
-import 'package:foxo/enums.dart';
+import 'package:foxo_application/game.dart';
+import 'package:foxo_application/enums.dart';
 
 void main() {
   test('initializes state', () {

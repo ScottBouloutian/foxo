@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
 class WiggleTransition extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
 
-  WiggleTransition({
-    Key key,
+  const WiggleTransition({
+    super.key,
     this.child,
-  }) : super(key: key);
+  });
 
   @override
   WiggleTransitionState createState() => WiggleTransitionState();
 }
 
-class WiggleTransitionState extends State<WiggleTransition> with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation animation;
+class WiggleTransitionState extends State<WiggleTransition>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
 
   @override
   void initState() {
@@ -64,7 +65,7 @@ class WiggleTransitionState extends State<WiggleTransition> with SingleTickerPro
       }
     });
     controller.forward();
- }
+  }
 
   @override
   void dispose() {
@@ -75,8 +76,8 @@ class WiggleTransitionState extends State<WiggleTransition> with SingleTickerPro
   @override
   Widget build(BuildContext context) {
     return RotationTransition(
-      child: widget.child,
       turns: animation,
+      child: widget.child,
     );
   }
 }
