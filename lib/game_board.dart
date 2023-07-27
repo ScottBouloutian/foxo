@@ -7,18 +7,18 @@ class GameBoard extends StatefulWidget {
   final Game game;
   final Function onWinner;
 
-  GameBoard({
-    Key key,
-    this.game,
-    this.onWinner,
-  }) : super(key: key);
+  const GameBoard({
+    super.key,
+    required this.game,
+    required this.onWinner,
+  });
 
   @override
-  _GameBoardState createState() => _GameBoardState();
+  State<GameBoard> createState() => _GameBoardState();
 }
 
 class _GameBoardState extends State<GameBoard> {
-  List<int> winningLine;
+  List<int>? winningLine;
 
   @override
   void didUpdateWidget(GameBoard oldWidget) {
@@ -33,7 +33,7 @@ class _GameBoardState extends State<GameBoard> {
   void handleCellTap(int index, CellType cellType) {
     var winner = widget.game.findGameState();
     if (cellType == CellType.empty && winner == null) {
-      this.setState(() {
+      setState(() {
         widget.game.state[index] = CellType.chick;
         winner = widget.game.findGameState();
         if (winner != null) {
@@ -54,29 +54,36 @@ class _GameBoardState extends State<GameBoard> {
   }
 
   List<Widget> buildCells() {
-    return widget.game.state.asMap().map((index, cellType) {
-      final wiggle = winningLine != null && winningLine.contains(index);
-      return MapEntry(index, Container(
-        child: GestureDetector(
-          onTap: () {
-            handleCellTap(index, cellType);
-          },
-          child: Cell(
-            type: cellType,
-            wiggle: wiggle,
-          ),
-        ),
-        padding: const EdgeInsets.all(10),
-      ));
-    }).values.toList();
+    return widget.game.state
+        .asMap()
+        .map((index, cellType) {
+          final wiggle = winningLine?.contains(index) ?? false;
+          return MapEntry(
+              index,
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: GestureDetector(
+                  onTap: () {
+                    handleCellTap(index, cellType);
+                  },
+                  child: Cell(
+                    type: cellType,
+                    wiggle: wiggle,
+                  ),
+                ),
+              ));
+        })
+        .values
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 3,
-      children: buildCells(),
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: buildCells(),
     );
   }
 }

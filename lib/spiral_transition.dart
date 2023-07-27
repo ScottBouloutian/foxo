@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
 class SpiralTransition extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
 
-  SpiralTransition({
-    Key key,
+  const SpiralTransition({
+    super.key,
     this.child,
-  }) : super(key: key);
+  });
 
   @override
   SpiralTransitionState createState() => SpiralTransitionState();
 }
 
-class SpiralTransitionState extends State<SpiralTransition> with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation turnsAnimation;
-  Animation scaleAnimation;
+class SpiralTransitionState extends State<SpiralTransition>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> turnsAnimation;
+  late Animation<double> scaleAnimation;
 
   @override
   void initState() {
@@ -27,21 +28,17 @@ class SpiralTransitionState extends State<SpiralTransition> with SingleTickerPro
     turnsAnimation = Tween<double>(
       begin: 0,
       end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Curves.linearToEaseOut,
-      )
-    );
+    ).animate(CurvedAnimation(
+      parent: controller,
+      curve: Curves.linearToEaseOut,
+    ));
     scaleAnimation = Tween<double>(
       begin: 0.5,
       end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Curves.linearToEaseOut,
-      )
-    );
+    ).animate(CurvedAnimation(
+      parent: controller,
+      curve: Curves.linearToEaseOut,
+    ));
     if (widget.child != null) {
       controller.forward();
     }
@@ -65,11 +62,11 @@ class SpiralTransitionState extends State<SpiralTransition> with SingleTickerPro
   @override
   Widget build(BuildContext context) {
     return RotationTransition(
-      child: ScaleTransition(
-        child: widget.child,
-        scale: scaleAnimation,
-      ),
       turns: turnsAnimation,
+      child: ScaleTransition(
+        scale: scaleAnimation,
+        child: widget.child,
+      ),
     );
   }
 }
