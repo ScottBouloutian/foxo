@@ -122,9 +122,11 @@ class HomePageState extends State<HomePage>
               child: SlideFadeTransition(
                 controller: controller!,
                 delay: 0.25,
-                child: GameBoard(
-                  game: game,
-                  onWinner: handleWinner,
+                child: SingleChildScrollView(
+                  child: GameBoard(
+                    game: game,
+                    onWinner: handleWinner,
+                  ),
                 ),
               ),
             ),
