@@ -79,11 +79,34 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 3,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: buildCells(),
+    var cellWidgets = buildCells();
+    return Column(
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            cellWidgets[0],
+            cellWidgets[1],
+            cellWidgets[2],
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            cellWidgets[3],
+            cellWidgets[4],
+            cellWidgets[5],
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            cellWidgets[6],
+            cellWidgets[7],
+            cellWidgets[8],
+          ],
+        ),
+      ],
     );
   }
 }
